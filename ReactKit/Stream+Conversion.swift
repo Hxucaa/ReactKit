@@ -25,6 +25,22 @@ public func asStream<T, U>(type: U?.Type)(upstream: Stream<T>) -> Stream<U?>
     return stream
 }
 
+/// converts Stream<T?> to Stream<U>
+public func asOptionalStream<T, U>(type: U.Type)(upstream: Stream<T?>) -> Stream<U>
+{
+    let stream = upstream |> map { $0! as! U }
+    stream.name("\(upstream.name)-asOptionalStream(\(type))")
+    return stream
+}
+
+/// converts Stream<T?> to Stream<U?>
+public func asOptionalStream<T, U>(type: U?.Type)(upstream: Stream<T?>) -> Stream<U$
+{
+    let stream = upstream |> map { $0! as? U }
+    stream.name("\(upstream.name)-asOptionalStream(\(type))")
+    return stream
+}
+
 public extension Stream
 {
     //--------------------------------------------------
